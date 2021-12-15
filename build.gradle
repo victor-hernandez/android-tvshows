@@ -1,0 +1,19 @@
+buildscript {
+
+    apply from: 'project_configuration.gradle'
+    apply from: 'project_dependencies.gradle'
+
+    dependencies {
+        classpath gradlePlugins.androidGradlePlugin
+        classpath gradlePlugins.kotlinGradlePlugin
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

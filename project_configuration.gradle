@@ -1,0 +1,19 @@
+ext {
+
+    version = [
+            major: 0,
+            minor: 1,
+            patch: 0,
+            build: 0,
+    ]
+
+    projectConfig = [
+            applicationId            : 'tvshows',
+            minSdk                   : 21,
+            targetSdk                : 31,
+            compileSdk               : 31,
+            versionName              : "${version.major}.${version.minor}.${version.patch}",
+            versionCode              : version.major * 1000000 + version.minor * 10000 + version.patch * 100 + version.build,
+            testInstrumentationRunner: 'androidx.test.runner.AndroidJUnitRunner'
+    ]
+}

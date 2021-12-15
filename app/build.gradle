@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+
+    compileSdk projectConfig.compileSdk
+
+    defaultConfig {
+        applicationId projectConfig.applicationId
+        minSdk projectConfig.minSdk
+        targetSdk projectConfig.targetSdk
+        versionCode projectConfig.versionCode
+        versionName projectConfig.versionName
+
+        testInstrumentationRunner projectConfig.testInstrumentationRunner
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            versionNameSuffix "-debug"
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+        }
+    }
+
+}
+
+dependencies {
+}

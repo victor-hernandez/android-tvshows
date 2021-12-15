@@ -1,0 +1,12 @@
+ext {
+
+    gradlepluginsVersions = [
+            androidGradlePlugin: '7.0.4',
+            kotlinGradlePlugin : '1.6.10',
+    ]
+
+    gradlePlugins = [
+            androidGradlePlugin: "com.android.tools.build:gradle:${gradlepluginsVersions.androidGradlePlugin}",
+            kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${gradlepluginsVersions.kotlinGradlePlugin}",
+    ]
+}
