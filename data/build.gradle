@@ -10,6 +10,9 @@ android {
         targetSdk projectConfig.targetSdk
         versionCode projectConfig.versionCode
         versionName projectConfig.versionName
+
+        buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+        buildConfigField "String", "API_KEY", '"66016bf29d1572b26fa06d0389ba6224"'
     }
 
     kotlinOptions {
@@ -20,4 +23,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+dependencies {
+    implementation libraries.retrofit
+    implementation libraries.retrofitMoshiConverter
 }

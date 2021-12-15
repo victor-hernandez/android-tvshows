@@ -9,4 +9,13 @@ ext {
             androidGradlePlugin: "com.android.tools.build:gradle:${gradlepluginsVersions.androidGradlePlugin}",
             kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${gradlepluginsVersions.kotlinGradlePlugin}",
     ]
+
+    librariesVersions = [
+            retrofit: '2.9.0',
+    ]
+
+    libraries = [
+            retrofit              : "com.squareup.retrofit2:retrofit:${librariesVersions.retrofit}",
+            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${librariesVersions.retrofit}",
+    ]
 }
