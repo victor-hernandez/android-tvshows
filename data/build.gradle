@@ -29,8 +29,14 @@ android {
 }
 
 dependencies {
+    implementation libraries.kotlin
     implementation libraries.retrofit
     implementation libraries.retrofitMoshiConverter
     implementation libraries.moshi
     kapt libraries.moshiCodegen
+
+    testImplementation project(':test-utils')
+    testImplementation testLibraries.kotlinJunit
+    testImplementation testLibraries.kotlinxCoroutinesTest
+    testImplementation testLibraries.mockitoKotlin
 }
