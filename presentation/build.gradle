@@ -1,0 +1,39 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+
+    compileSdk projectConfig.compileSdk
+
+    defaultConfig {
+        minSdk projectConfig.minSdk
+        targetSdk projectConfig.targetSdk
+        versionCode projectConfig.versionCode
+        versionName projectConfig.versionName
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation libraries.kotlin
+    implementation libraries.kotlinxCoroutinesCore
+
+    implementation libraries.composeViewModel
+
+    testImplementation project(':test-utils')
+    testImplementation testLibraries.kotlinJunit
+    testImplementation testLibraries.kotlinxCoroutinesTest
+    testImplementation testLibraries.mockitoKotlin
+    testImplementation testLibraries.turbine
+}

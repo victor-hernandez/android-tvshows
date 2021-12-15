@@ -11,6 +11,7 @@ ext {
     ]
 
     librariesVersions = [
+            composeViewModel : '2.4.0',
             kotlin           : '1.6.10',
             kotlinxCoroutines: '1.5.2',
             moshi            : '1.13.0',
@@ -18,7 +19,9 @@ ext {
     ]
 
     libraries = [
+            composeViewModel      : "androidx.lifecycle:lifecycle-viewmodel-compose:${librariesVersions.composeViewModel}",
             kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${librariesVersions.kotlin}",
+            kotlinxCoroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${librariesVersions.kotlinxCoroutines}",
             moshi                 : "com.squareup.moshi:moshi:${librariesVersions.moshi}",
             moshiCodegen          : "com.squareup.moshi:moshi-kotlin-codegen:${librariesVersions.moshi}",
             retrofit              : "com.squareup.retrofit2:retrofit:${librariesVersions.retrofit}",
@@ -27,11 +30,13 @@ ext {
 
     testLibrariesVersions = [
             mockito: '4.0.0',
+            turbine: '0.7.0',
     ]
 
     testLibraries = [
             kotlinJunit          : "org.jetbrains.kotlin:kotlin-test-junit:${librariesVersions.kotlin}",
             kotlinxCoroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${librariesVersions.kotlinxCoroutines}",
             mockitoKotlin        : "org.mockito.kotlin:mockito-kotlin:${testLibrariesVersions.mockito}",
+            turbine              : "app.cash.turbine:turbine:${testLibrariesVersions.turbine}",
     ]
 }

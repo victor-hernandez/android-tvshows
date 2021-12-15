@@ -6,4 +6,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TV shows"
-include ':app', ':domain', ':data', ':test-utils'
+include ':app', ':presentation', ':domain', ':data', ':test-utils'
