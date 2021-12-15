@@ -1,8 +1,8 @@
-package dev.victorhernandez.tvshows.data.source
+package dev.victorhernandez.tvshows.data.repository
 
-import dev.victorhernandez.tvshows.data.model.mapper.toData
-import dev.victorhernandez.tvshows.data.remote.TvShowApiService
-import dev.victorhernandez.tvshows.data.utils.TvShowPageApiModelFactory
+import dev.victorhernandez.tvshows.data.model.mapper.toDomain
+import dev.victorhernandez.tvshows.data.source.TvShowRemoteDataSource
+import dev.victorhernandez.tvshows.data.utils.TvShowPageDataModelFactory
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
@@ -14,32 +14,32 @@ import org.mockito.kotlin.*
 import kotlin.random.Random
 
 @RunWith(MockitoJUnitRunner::class)
-class TvShowRemoteDataSourceImplTest {
+class TvShowRepositoryImplTest {
 
-    private lateinit var sut: TvShowRemoteDataSourceImpl
+    private lateinit var sut: TvShowRepositoryImpl
 
     @Mock
-    private lateinit var tvShowApiService: TvShowApiService
+    private lateinit var remoteDataSource: TvShowRemoteDataSource
 
     @Before
     fun setUp() {
-        sut = TvShowRemoteDataSourceImpl(tvShowApiService)
+        sut = TvShowRepositoryImpl(remoteDataSource)
     }
 
     @Test
     fun `verify get top rated shows happy path`() = runBlockingTest {
         // given:
         val page = Random.nextInt()
-        val response = TvShowPageApiModelFactory.createOne()
-        whenever(tvShowApiService.getTopRatedShows(any())).doAnswer { response }
+        val response = TvShowPageDataModelFactory.createOne()
+        whenever(remoteDataSource.getTopRatedShows(any())).doAnswer { response }
 
         // when:
         val result = sut.getTopRatedShows(page)
 
         // then:
-        Assert.assertEquals(response.toData(), result)
-        verify(tvShowApiService).getTopRatedShows(page)
-        verifyNoMoreInteractions(tvShowApiService)
+        Assert.assertEquals(response.toDomain(), result)
+        verify(remoteDataSource).getTopRatedShows(page)
+        verifyNoMoreInteractions(remoteDataSource)
     }
 
     @Test
@@ -47,7 +47,7 @@ class TvShowRemoteDataSourceImplTest {
         // given:
         val page = Random.nextInt()
         val error = Throwable()
-        whenever(tvShowApiService.getTopRatedShows(any())).doAnswer { throw error }
+        whenever(remoteDataSource.getTopRatedShows(any())).doAnswer { throw error }
 
         // when:
         var result: Throwable? = null
@@ -59,8 +59,7 @@ class TvShowRemoteDataSourceImplTest {
 
         // then:
         Assert.assertEquals(error, result)
-        verify(tvShowApiService).getTopRatedShows(page)
-        verifyNoMoreInteractions(tvShowApiService)
-
+        verify(remoteDataSource).getTopRatedShows(page)
+        verifyNoMoreInteractions(remoteDataSource)
     }
 }
