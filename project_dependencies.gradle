@@ -11,10 +11,13 @@ ext {
     ]
 
     librariesVersions = [
+            moshi   : '1.13.0',
             retrofit: '2.9.0',
     ]
 
     libraries = [
+            moshi                 : "com.squareup.moshi:moshi:${librariesVersions.moshi}",
+            moshiCodegen          : "com.squareup.moshi:moshi-kotlin-codegen:${librariesVersions.moshi}",
             retrofit              : "com.squareup.retrofit2:retrofit:${librariesVersions.retrofit}",
             retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${librariesVersions.retrofit}",
     ]
