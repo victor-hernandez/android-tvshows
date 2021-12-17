@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -26,12 +27,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildTypes {
+        release {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'false'
+        }
+
+        debug {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'true'
+        }
+    }
 }
 
 dependencies {
-    implementation project(':domain')
     implementation libraries.kotlin
+    implementation project(':domain')
+
+    implementation libraries.hilt
+    kapt libraries.hiltCompiler
+
     implementation libraries.retrofit
+    implementation libraries.okhttpLoggingInterceptor
     implementation libraries.retrofitMoshiConverter
     implementation libraries.moshi
     kapt libraries.moshiCodegen

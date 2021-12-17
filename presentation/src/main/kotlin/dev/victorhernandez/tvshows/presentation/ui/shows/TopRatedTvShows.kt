@@ -6,8 +6,7 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +15,8 @@ import dev.victorhernandez.tvshows.presentation.theme.SpacingMedium
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowListUiState
 
 internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvShowsLazyVerticalGrid"
 
@@ -40,6 +41,17 @@ fun TopRatedTvShows(
             }
         }
     }
+}
+
+@Composable
+fun TopRatedTvShowsScreen(
+    viewModel: TopRatedTvShowsViewModel = viewModel()
+) {
+    val state = viewModel.uiState.collectAsState(TvShowListUiState())
+    LaunchedEffect(viewModel) {
+        viewModel.loadTopRatedTvShows()
+    }
+    TopRatedTvShows(state.value.shows) {}
 }
 
 @ExperimentalFoundationApi

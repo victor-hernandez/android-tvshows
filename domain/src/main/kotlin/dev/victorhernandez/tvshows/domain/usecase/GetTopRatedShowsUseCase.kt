@@ -2,8 +2,9 @@ package dev.victorhernandez.tvshows.domain.usecase
 
 import dev.victorhernandez.tvshows.domain.model.TvShowPageDomainModel
 import dev.victorhernandez.tvshows.domain.repository.TvShowRepository
+import javax.inject.Inject
 
-class GetTopRatedShowsUseCase (
+class GetTopRatedShowsUseCase @Inject constructor(
     private val repository: TvShowRepository
 ): UseCase<GetTopRatedShowsUseCase.Params, TvShowPageDomainModel>() {
 

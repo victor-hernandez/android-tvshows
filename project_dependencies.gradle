@@ -5,21 +5,25 @@ ext {
             kotlinGradlePlugin : '1.5.31',
     ]
 
-    gradlePlugins = [
-            androidGradlePlugin: "com.android.tools.build:gradle:${gradlepluginsVersions.androidGradlePlugin}",
-            kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${gradlepluginsVersions.kotlinGradlePlugin}",
-    ]
-
     librariesVersions = [
             androidxCompose         : '1.0.5',
             androidxComposeActivity : '1.4.0',
             androidxComposeViewModel: '2.4.0',
             coil                    : '1.4.0',
+            okhttp                  : '3.12.13',
+            hilt                    : '2.40.5',
+            jaxaxInject             : '1',
             kotlin                  : '1.5.31',
             kotlinxCoroutines       : '1.5.2',
             material                : '1.4.0',
-            moshi                   : '1.13.0',
+            moshi                   : '1.12.0',
             retrofit                : '2.9.0',
+    ]
+
+    gradlePlugins = [
+            androidGradlePlugin: "com.android.tools.build:gradle:${gradlepluginsVersions.androidGradlePlugin}",
+            hiltGradlePlugin   : "com.google.dagger:hilt-android-gradle-plugin:${librariesVersions.hilt}",
+            kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:${gradlepluginsVersions.kotlinGradlePlugin}",
     ]
 
     libraries = [
@@ -30,6 +34,10 @@ ext {
             androidxComposeUiTooling: "androidx.compose.ui:ui-tooling:${librariesVersions.androidxCompose}",
             androidxComposeViewModel: "androidx.lifecycle:lifecycle-viewmodel-compose:${librariesVersions.androidxComposeViewModel}",
             coilCompose             : "io.coil-kt:coil-compose:${librariesVersions.coil}",
+            okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${librariesVersions.okhttp}",
+            hilt                    : "com.google.dagger:hilt-android:${librariesVersions.hilt}",
+            hiltCompiler            : "com.google.dagger:hilt-android-compiler:${librariesVersions.hilt}",
+            jaxaxInject             : "javax.inject:javax.inject:${librariesVersions.jaxaxInject}",
             kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${librariesVersions.kotlin}",
             kotlinxCoroutinesCore   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${librariesVersions.kotlinxCoroutines}",
             material                : "com.google.android.material:material:${librariesVersions.material}",

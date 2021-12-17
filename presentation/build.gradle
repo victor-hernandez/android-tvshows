@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -37,9 +39,12 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
     implementation libraries.kotlin
     implementation libraries.kotlinxCoroutinesCore
+    implementation project(':domain')
+
+    implementation libraries.hilt
+    kapt libraries.hiltCompiler
 
     implementation libraries.androidxComposeActivity
     implementation libraries.androidxComposeUiPreview
@@ -54,7 +59,6 @@ dependencies {
     testImplementation testLibraries.mockitoKotlin
     testImplementation testLibraries.turbine
     testImplementation testLibraries.mockitoKotlin
-
     testImplementation testLibraries.androidxComposeJunit4
     debugImplementation testLibraries.androidxComposeTestManifest
     testImplementation testLibraries.robolectric

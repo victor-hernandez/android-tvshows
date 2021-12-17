@@ -2,6 +2,7 @@ package dev.victorhernandez.tvshows.presentation.ui.shows
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.victorhernandez.tvshows.domain.usecase.GetTopRatedShowsUseCase
 import dev.victorhernandez.tvshows.presentation.flow.collect
 import dev.victorhernandez.tvshows.presentation.flow.flowStatus
@@ -11,8 +12,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TopRatedTvShowsViewModel(
+@HiltViewModel
+class TopRatedTvShowsViewModel @Inject constructor(
     private val getTopRatedShowsUseCase: GetTopRatedShowsUseCase,
     private val coroutineDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -49,7 +52,7 @@ class TopRatedTvShowsViewModel(
                                 shows = state.shows.append(it.toUi())
                             )
                         }
-                            TvShowListUiState(
+                        TvShowListUiState(
                             shows = it.toUi()
                         )
                     },

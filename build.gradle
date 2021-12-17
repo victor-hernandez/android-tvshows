@@ -6,6 +6,7 @@ buildscript {
     dependencies {
         classpath gradlePlugins.androidGradlePlugin
         classpath gradlePlugins.kotlinGradlePlugin
+        classpath gradlePlugins.hiltGradlePlugin
     }
 
     repositories {

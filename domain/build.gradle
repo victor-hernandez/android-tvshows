@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation libraries.kotlin
+    implementation libraries.jaxaxInject
 
     testImplementation project(':test-utils')
     testImplementation testLibraries.kotlinJunit

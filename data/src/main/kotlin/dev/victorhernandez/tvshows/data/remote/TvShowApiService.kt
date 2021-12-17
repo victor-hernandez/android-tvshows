@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface TvShowApiService {
 
-    @GET("/tv/top_rated")
+    @GET("tv/top_rated")
     suspend fun getTopRatedShows(
         @Query("page") page: Int = 1
     ): TvShowPageApiModel
