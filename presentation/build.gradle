@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdk projectConfig.minSdk
         targetSdk projectConfig.targetSdk
-        versionCode projectConfig.versionCode
-        versionName projectConfig.versionName
     }
 
     kotlinOptions {
@@ -28,7 +26,13 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion librariesVersions.compose
+        kotlinCompilerExtensionVersion librariesVersions.androidxCompose
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -38,15 +42,20 @@ dependencies {
     implementation libraries.kotlinxCoroutinesCore
 
     implementation libraries.androidxComposeActivity
-    implementation libraries.composeUiPreview
-    implementation libraries.composeMaterial
-    implementation libraries.composeViewModel
+    implementation libraries.androidxComposeUiPreview
+    implementation libraries.androidxComposeMaterial
+    implementation libraries.androidxComposeViewModel
     implementation libraries.coilCompose
-    debugImplementation libraries.composeUiTooling
+    debugImplementation libraries.androidxComposeUiTooling
 
     testImplementation project(':test-utils')
     testImplementation testLibraries.kotlinJunit
     testImplementation testLibraries.kotlinxCoroutinesTest
     testImplementation testLibraries.mockitoKotlin
     testImplementation testLibraries.turbine
+    testImplementation testLibraries.mockitoKotlin
+
+    testImplementation testLibraries.androidxComposeJunit4
+    debugImplementation testLibraries.androidxComposeTestManifest
+    testImplementation testLibraries.robolectric
 }
