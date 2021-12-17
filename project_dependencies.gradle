@@ -2,7 +2,7 @@ ext {
 
     gradlepluginsVersions = [
             androidGradlePlugin: '7.0.4',
-            kotlinGradlePlugin : '1.6.10',
+            kotlinGradlePlugin : '1.5.31',
     ]
 
     gradlePlugins = [
@@ -11,21 +11,30 @@ ext {
     ]
 
     librariesVersions = [
-            composeViewModel : '2.4.0',
-            kotlin           : '1.6.10',
-            kotlinxCoroutines: '1.5.2',
-            moshi            : '1.13.0',
-            retrofit         : '2.9.0',
+            androidxComposeActivity: '1.4.0',
+            coil                   : '1.4.0',
+            compose                : '1.0.5',
+            composeViewModel       : '2.4.0',
+            kotlin                 : '1.5.31',
+            kotlinxCoroutines      : '1.5.2',
+            moshi                  : '1.13.0',
+            retrofit               : '2.9.0',
     ]
 
     libraries = [
-            composeViewModel      : "androidx.lifecycle:lifecycle-viewmodel-compose:${librariesVersions.composeViewModel}",
-            kotlin                : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${librariesVersions.kotlin}",
-            kotlinxCoroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${librariesVersions.kotlinxCoroutines}",
-            moshi                 : "com.squareup.moshi:moshi:${librariesVersions.moshi}",
-            moshiCodegen          : "com.squareup.moshi:moshi-kotlin-codegen:${librariesVersions.moshi}",
-            retrofit              : "com.squareup.retrofit2:retrofit:${librariesVersions.retrofit}",
-            retrofitMoshiConverter: "com.squareup.retrofit2:converter-moshi:${librariesVersions.retrofit}",
+            coilCompose            : "io.coil-kt:coil-compose:${librariesVersions.coil}",
+            androidxComposeActivity: "androidx.activity:activity-compose:${librariesVersions.androidxComposeActivity}",
+            composeMaterial        : "androidx.compose.material:material:${librariesVersions.compose}",
+            composeUi              : "androidx.compose.ui:ui:${librariesVersions.compose}",
+            composeUiPreview       : "androidx.compose.ui:ui-tooling-preview:${librariesVersions.compose}",
+            composeUiTooling       : "androidx.compose.ui:ui-tooling:${librariesVersions.compose}",
+            composeViewModel       : "androidx.lifecycle:lifecycle-viewmodel-compose:${librariesVersions.composeViewModel}",
+            kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${librariesVersions.kotlin}",
+            kotlinxCoroutinesCore  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${librariesVersions.kotlinxCoroutines}",
+            moshi                  : "com.squareup.moshi:moshi:${librariesVersions.moshi}",
+            moshiCodegen           : "com.squareup.moshi:moshi-kotlin-codegen:${librariesVersions.moshi}",
+            retrofit               : "com.squareup.retrofit2:retrofit:${librariesVersions.retrofit}",
+            retrofitMoshiConverter : "com.squareup.retrofit2:converter-moshi:${librariesVersions.retrofit}",
     ]
 
     testLibrariesVersions = [

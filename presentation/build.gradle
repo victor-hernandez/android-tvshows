@@ -22,6 +22,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion librariesVersions.compose
+    }
 }
 
 dependencies {
@@ -29,7 +37,12 @@ dependencies {
     implementation libraries.kotlin
     implementation libraries.kotlinxCoroutinesCore
 
+    implementation libraries.androidxComposeActivity
+    implementation libraries.composeUiPreview
+    implementation libraries.composeMaterial
     implementation libraries.composeViewModel
+    implementation libraries.coilCompose
+    debugImplementation libraries.composeUiTooling
 
     testImplementation project(':test-utils')
     testImplementation testLibraries.kotlinJunit
