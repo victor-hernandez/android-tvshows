@@ -13,4 +13,7 @@ class TvShowRepositoryImpl @Inject constructor(
     override suspend fun getTopRatedShows(page: Int): TvShowPageDomainModel =
         remoteDataSource.getTopRatedShows(page).toDomain()
 
+    override suspend fun getSimilarShows(showId: Int, page: Int): TvShowPageDomainModel =
+        remoteDataSource.getSimilarShows(showId, page).toDomain()
+
 }

@@ -6,4 +6,6 @@ interface TvShowRepository {
 
     suspend fun getTopRatedShows(page: Int = 1): TvShowPageDomainModel
 
+    suspend fun getSimilarShows(showId: Int, page: Int = 1): TvShowPageDomainModel
+
 }
