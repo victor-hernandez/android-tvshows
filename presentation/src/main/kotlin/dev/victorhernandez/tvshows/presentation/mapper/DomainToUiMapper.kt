@@ -6,10 +6,10 @@ import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
 
 fun TvShowListItemDomainModel.toUi(): TvShowListItemUiModel =
     TvShowListItemUiModel(
-        id,
-        name,
-        backdropPath ?: posterPath,
-        voteAverage
+        id = id,
+        name =name,
+        image = "https://image.tmdb.org/t/p/w500/$posterPath",
+        voteAverage = voteAverage
     )
 
 fun TvShowPageDomainModel.toUi(): List<TvShowListItemUiModel> =
