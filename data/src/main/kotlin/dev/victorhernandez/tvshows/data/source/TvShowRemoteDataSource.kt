@@ -6,4 +6,6 @@ interface TvShowRemoteDataSource {
 
     suspend fun getTopRatedShows(page: Int = 1): TvShowPageDataModel
 
+    suspend fun getSimilarShows(showId: Int, page: Int = 1): TvShowPageDataModel
+
 }
