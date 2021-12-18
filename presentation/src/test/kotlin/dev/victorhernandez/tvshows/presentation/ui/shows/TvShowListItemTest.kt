@@ -1,5 +1,6 @@
 package dev.victorhernandez.tvshows.presentation.ui.shows
 
+import androidx.compose.material.Surface
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -33,10 +34,12 @@ class TvShowListItemTest {
     fun setUp() {
         composeTestRule.setContent {
             TVShowsTheme {
-                TvShowListItem(
-                    show,
-                    onClick
-                )
+                Surface {
+                    TvShowListItem(
+                        show,
+                        onClick
+                    )
+                }
             }
         }
     }

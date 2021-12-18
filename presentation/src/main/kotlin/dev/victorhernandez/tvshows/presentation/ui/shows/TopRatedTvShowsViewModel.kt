@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.victorhernandez.tvshows.domain.usecase.GetTopRatedShowsUseCase
 import dev.victorhernandez.tvshows.presentation.flow.collect
 import dev.victorhernandez.tvshows.presentation.flow.flowStatus
-import dev.victorhernandez.tvshows.presentation.mapper.toUi
-import dev.victorhernandez.tvshows.presentation.model.TvShowListUiState
+import dev.victorhernandez.tvshows.presentation.ktx.append
+import dev.victorhernandez.tvshows.presentation.mapper.toListUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ class TopRatedTvShowsViewModel @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(TvShowListUiState())
+    private val _uiState = MutableStateFlow(TopRatedTvShowsUiState())
     val uiState = _uiState.asStateFlow()
 
     private var currentPage = 1
@@ -33,7 +33,7 @@ class TopRatedTvShowsViewModel @Inject constructor(
 
     fun loadMoreShows() {
         if (canLoadMoreShows) {
-            loadTopRatedTvShows(currentPage)
+            loadTopRatedTvShows(currentPage+1)
         }
     }
 
@@ -49,11 +49,11 @@ class TopRatedTvShowsViewModel @Inject constructor(
 
                         _uiState.value = _uiState.value.let { state ->
                             state.copy(
-                                shows = state.shows.append(it.toUi())
+                                shows = state.shows.append(it.toListUiModel())
                             )
                         }
-                        TvShowListUiState(
-                            shows = it.toUi()
+                        TopRatedTvShowsUiState(
+                            shows = it.toListUiModel()
                         )
                     },
                     onError = {
@@ -65,8 +65,5 @@ class TopRatedTvShowsViewModel @Inject constructor(
                 )
         }
     }
-
-    private fun <T> List<T>?.append(items: Collection<T>?): List<T> =
-        (this?.toMutableList() ?: mutableListOf()).apply { addAll(items ?: listOf()) }
 
 }

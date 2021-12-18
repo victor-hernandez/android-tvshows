@@ -19,12 +19,12 @@ internal val TvShows = listOf(
         id = 94605,
         name = "Arcane",
         image = "https://image.tmdb.org/t/p/original/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg",
-        voteAverage =9.2
+        voteAverage = 9.2
     ),
     TvShowListItemUiModel(
         id = 77696,
         name = "Corre BTS (Run BTS)",
-        image = "https://image.tmdb.org/t/p/original",
+        image = "https://image.tmdb.org/t/p/original/xxv8Ibs8Anni6qrWkAf60rDsPCu.jpg",
         voteAverage = 9.1
     ),
     TvShowListItemUiModel(

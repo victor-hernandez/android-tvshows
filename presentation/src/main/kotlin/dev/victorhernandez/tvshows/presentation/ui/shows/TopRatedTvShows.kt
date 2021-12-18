@@ -16,7 +16,6 @@ import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.victorhernandez.tvshows.presentation.model.TvShowListUiState
 
 internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvShowsLazyVerticalGrid"
 
@@ -47,7 +46,7 @@ fun TopRatedTvShows(
 fun TopRatedTvShowsScreen(
     viewModel: TopRatedTvShowsViewModel = viewModel()
 ) {
-    val state = viewModel.uiState.collectAsState(TvShowListUiState())
+    val state = viewModel.uiState.collectAsState(TopRatedTvShowsUiState())
     LaunchedEffect(viewModel) {
         viewModel.loadTopRatedTvShows()
     }
@@ -56,7 +55,7 @@ fun TopRatedTvShowsScreen(
 
 @ExperimentalFoundationApi
 @Composable
-fun TopRatedTvShowsPreview(darkTheme: Boolean) {
+private fun TopRatedTvShowsPreview(darkTheme: Boolean) {
     TVShowsTheme(darkTheme) {
         TopRatedTvShows(
             shows = TvShows

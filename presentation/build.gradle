@@ -52,6 +52,7 @@ dependencies {
     implementation libraries.androidxComposeViewModel
     implementation libraries.coilCompose
     debugImplementation libraries.androidxComposeUiTooling
+    implementation libraries.composeLazySnapper
 
     testImplementation project(':test-utils')
     testImplementation testLibraries.kotlinJunit

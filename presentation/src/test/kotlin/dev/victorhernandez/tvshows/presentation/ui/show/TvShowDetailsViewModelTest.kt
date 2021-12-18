@@ -1,8 +1,8 @@
-package dev.victorhernandez.tvshows.presentation.ui.shows
+package dev.victorhernandez.tvshows.presentation.ui.show
 
 import app.cash.turbine.test
-import dev.victorhernandez.tvshows.domain.usecase.GetTopRatedShowsUseCase
-import dev.victorhernandez.tvshows.presentation.mapper.toListUiModel
+import dev.victorhernandez.tvshows.domain.usecase.GetSimilarTvShowsUseCase
+import dev.victorhernandez.tvshows.presentation.mapper.toDetailUiModel
 import dev.victorhernandez.tvshows.presentation.utils.TvShowPageDomainModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -16,67 +16,70 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
+import kotlin.random.Random
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class TopRatedTvShowsViewModelTest {
+class TvShowDetailsViewModelTest {
 
-    private lateinit var sut: TopRatedTvShowsViewModel
+    private lateinit var sut: TvShowDetailsViewModel
 
     @Mock
-    private lateinit var getTopRatedShowsUseCase: GetTopRatedShowsUseCase
+    private lateinit var getSimilarTvShowsUseCase: GetSimilarTvShowsUseCase
 
     private val testDispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setUp() {
-        sut = TopRatedTvShowsViewModel(
-            getTopRatedShowsUseCase,
+        sut = TvShowDetailsViewModel(
+            getSimilarTvShowsUseCase,
             testDispatcher
         )
     }
 
     @Test
-    fun `verify load top rated tv shows happy path interactions`() =
-        testDispatcher.runBlockingTest {
-            // given:
-            val response = TvShowPageDomainModelFactory.createOne()
-            whenever(getTopRatedShowsUseCase.execute(any())).thenAnswer { response }
-
-            // when:
-            sut.loadTopRatedTvShows()
-
-            // then:
-            verify(getTopRatedShowsUseCase).execute(GetTopRatedShowsUseCase.Params(1))
-            verifyNoMoreInteractions(getTopRatedShowsUseCase)
-        }
-
-    @Test
-    fun `verify load top rated tv shows on error interactions`() = testDispatcher.runBlockingTest {
+    fun `verify load similar tv shows happy path`() = testDispatcher.runBlockingTest {
         // given:
-        val error = Throwable()
-        whenever(getTopRatedShowsUseCase.execute(any())).thenAnswer { throw error }
+        val showId = Random.nextInt()
+        val response = TvShowPageDomainModelFactory.createOne()
+        whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
 
         // when:
-        sut.loadTopRatedTvShows()
+        sut.loadNextSimilarTvShows(showId)
 
         // then:
-        verify(getTopRatedShowsUseCase).execute(GetTopRatedShowsUseCase.Params(1))
-        verifyNoMoreInteractions(getTopRatedShowsUseCase)
+        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(showId, 1))
+        verifyNoMoreInteractions(getSimilarTvShowsUseCase)
+    }
+
+    @Test
+    fun `verify load similar tv shows on error interactions`() = testDispatcher.runBlockingTest {
+        // given:
+        val showId = Random.nextInt()
+        val error = Throwable()
+        whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
+
+        // when:
+        sut.loadNextSimilarTvShows(showId)
+
+        // then:
+        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(showId, 1))
+        verifyNoMoreInteractions(getSimilarTvShowsUseCase)
     }
 
     @Test
     fun `verify ui state content successful load`() = testDispatcher.runBlockingTest {
+        val showId = Random.nextInt()
         val response = TvShowPageDomainModelFactory.createOne()
-        whenever(getTopRatedShowsUseCase.execute(any())).thenAnswer { response }
+        whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
         sut.uiState.test {
             awaitItem().apply {
                 assertEquals(false, loading)
                 assertEquals(emptyList(), shows)
             }
 
-            sut.loadTopRatedTvShows()
+            sut.loadNextSimilarTvShows(showId)
 
             awaitItem().apply {
                 assertEquals(true, loading)
@@ -85,27 +88,28 @@ class TopRatedTvShowsViewModelTest {
 
             awaitItem().apply {
                 assertEquals(true, loading)
-                assertEquals(response.toListUiModel(), shows)
+                assertEquals(response.toDetailUiModel(), shows)
             }
 
             awaitItem().apply {
                 assertEquals(false, loading)
-                assertEquals(response.toListUiModel(), shows)
+                assertEquals(response.toDetailUiModel(), shows)
             }
         }
     }
 
     @Test
     fun `verify ui state content on error load`() = testDispatcher.runBlockingTest {
+        val showId = Random.nextInt()
         val error = Throwable()
-        whenever(getTopRatedShowsUseCase.execute(any())).thenAnswer { throw error }
+        whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
         sut.uiState.test {
             awaitItem().apply {
                 assertEquals(false, loading)
                 assertEquals(emptyList(), shows)
             }
 
-            sut.loadTopRatedTvShows()
+            sut.loadNextSimilarTvShows(showId)
 
             awaitItem().apply {
                 assertEquals(true, loading)
