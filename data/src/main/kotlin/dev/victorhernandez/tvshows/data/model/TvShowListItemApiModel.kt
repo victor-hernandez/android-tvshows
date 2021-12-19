@@ -20,7 +20,7 @@ data class TvShowListItemApiModel(
     @Json(name = "genre_ids")
     val genreIds: List<Int>,
     @Json(name = "first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @Json(name = "poster_path")
     val posterPath: String?,
     @Json(name = "backdrop_path")

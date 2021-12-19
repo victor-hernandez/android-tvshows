@@ -8,7 +8,7 @@ data class TvShowListItemDomainModel(
     val originCountry: List<String>,
     val overview: String,
     val genreIds: List<Int>,
-    val firstAirDate: String,
+    val firstAirDate: String?,
     val posterPath: String?,
     val backdropPath: String?,
     val popularity: Double,

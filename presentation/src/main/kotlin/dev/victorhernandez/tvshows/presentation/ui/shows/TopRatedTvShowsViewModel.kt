@@ -26,14 +26,19 @@ class TopRatedTvShowsViewModel @Inject constructor(
     private var currentPage = 1
     private var canLoadMoreShows = false
 
-    fun loadTopRatedTvShows() {
+    init {
+        loadTopRatedTvShows()
+    }
+
+    private fun loadTopRatedTvShows() {
         currentPage = 1
+        _uiState.value = _uiState.value.copy(shows = emptyList())
         loadTopRatedTvShows(currentPage)
     }
 
     fun loadMoreShows() {
-        if (canLoadMoreShows) {
-            loadTopRatedTvShows(currentPage+1)
+        if (!_uiState.value.loading && canLoadMoreShows) {
+            loadTopRatedTvShows(currentPage + 1)
         }
     }
 

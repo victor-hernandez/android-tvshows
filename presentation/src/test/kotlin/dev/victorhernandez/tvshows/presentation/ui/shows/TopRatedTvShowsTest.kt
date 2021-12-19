@@ -1,10 +1,7 @@
 package dev.victorhernandez.tvshows.presentation.ui.shows
 
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
@@ -13,9 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyNoMoreInteractions
+import org.mockito.kotlin.*
 
 @RunWith(AndroidJUnit4::class)
 class TopRatedTvShowsTest {
@@ -27,12 +22,15 @@ class TopRatedTvShowsTest {
 
     private val onClick: ((TvShowListItemUiModel) -> Unit) = mock()
 
+    private val onLoadMore: (() -> Unit) = mock()
+
     @Before
     fun setUp() {
         composeTestRule.setContent {
             TVShowsTheme {
                 TopRatedTvShows(
                     shows,
+                    onLoadMore,
                     onClick
                 )
             }
@@ -55,5 +53,13 @@ class TopRatedTvShowsTest {
 
         verify(onClick).invoke(show)
         verifyNoMoreInteractions(onClick)
+    }
+
+    @Test
+    fun `should invoke on load more shows callback when reaching the end of the list`() {
+        composeTestRule.onNodeWithTag(TestTagTopRatedTvShowsLazyVerticalGrid)
+            .performScrollToIndex(shows.size/2-1)
+
+        verify(onLoadMore, atLeastOnce()).invoke()
     }
 }

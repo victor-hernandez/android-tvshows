@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
 import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
 import dev.victorhernandez.tvshows.presentation.theme.SpacingMedium
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
+import dev.victorhernandez.tvshows.presentation.ui.common.ListEndReachedHandler
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 
@@ -24,10 +26,13 @@ internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvSh
 @Composable
 fun TopRatedTvShows(
     shows: List<TvShowListItemUiModel>,
+    onLoadMoreShows: () -> Unit,
     onClick: (TvShowListItemUiModel) -> Unit
 ) {
+    val listState = rememberLazyListState()
 
     LazyVerticalGrid(
+        state = listState,
         cells = GridCells.Fixed(2),
         contentPadding = PaddingValues(SpacingMedium),
         modifier = Modifier.testTag(TestTagTopRatedTvShowsLazyVerticalGrid)
@@ -38,6 +43,11 @@ fun TopRatedTvShows(
             }
         }
     }
+
+    ListEndReachedHandler(
+        listState = listState,
+        onLoadMode = onLoadMoreShows
+    )
 }
 
 @Composable
@@ -46,10 +56,10 @@ fun TopRatedTvShowsScreen(
     onNavigateToShowDetails: (TvShowDetailUiModel) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState(TopRatedTvShowsUiState())
-    LaunchedEffect(viewModel) {
-        viewModel.loadTopRatedTvShows()
-    }
-    TopRatedTvShows(state.value.shows) {
+    TopRatedTvShows(
+        state.value.shows,
+        { viewModel.loadMoreShows() }
+    ) {
         onNavigateToShowDetails.invoke(
             TvShowDetailUiModel(
                 it.id,
@@ -70,7 +80,8 @@ private fun TopRatedTvShowsPreview(darkTheme: Boolean) {
             topBar = { TvShowsTopBar(false) { } }
         ) {
             TopRatedTvShows(
-                shows = TvShows
+                shows = TvShows,
+                onLoadMoreShows = { }
             ) { }
         }
     }
