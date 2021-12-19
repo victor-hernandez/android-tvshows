@@ -31,6 +31,7 @@ internal const val TestTagTvShowDetailBottomSheet = "TestTagTvShowDetailBottomSh
 @Composable
 fun TvShowDetailsScreen(
     show: TvShowDetailUiModel,
+    onBackPressed: () -> Unit,
     viewModel: TvShowDetailsViewModel = hiltViewModel()
 ) {
 
@@ -39,7 +40,8 @@ fun TvShowDetailsScreen(
 
     RelatedTvShows(
         shows = state.value.shows,
-        onListEndReached = { viewModel.loadNextSimilarTvShows() }
+        onListEndReached = { viewModel.loadNextSimilarTvShows() },
+        onBackPressed = onBackPressed
     )
 }
 

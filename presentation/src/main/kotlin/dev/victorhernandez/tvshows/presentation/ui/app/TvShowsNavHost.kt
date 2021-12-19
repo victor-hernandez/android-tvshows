@@ -49,9 +49,9 @@ fun TvShowsNavHost(
                         args.getString("image"),
                         args.getString("voteAverage")?.toDouble() ?: .0,
                         args.getString("overview")!!
-
                     )
-                }
+                },
+                { navController.navigateUp() }
             )
         }
     }
