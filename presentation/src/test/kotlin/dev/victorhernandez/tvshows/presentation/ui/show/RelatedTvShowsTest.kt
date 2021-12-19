@@ -28,7 +28,8 @@ class RelatedTvShowsTest {
         composeTestRule.setContent {
             TVShowsTheme {
                 RelatedTvShows(
-                    shows
+                    shows,
+                    { }
                 ) { }
             }
         }

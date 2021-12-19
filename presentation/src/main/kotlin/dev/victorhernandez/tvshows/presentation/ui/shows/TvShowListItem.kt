@@ -16,10 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import coil.size.OriginalSize
-import coil.size.Scale
 import dev.victorhernandez.tvshows.presentation.R
-import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.theme.*
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 
@@ -27,8 +25,8 @@ internal const val TestTagTvShowListItemCard = "TestTagTvShowListItemCard"
 
 @Composable
 fun TvShowListItem(
-    show: TvShowListItemUiModel,
-    onClick: (TvShowListItemUiModel) -> Unit
+    show: TvShowUiModel,
+    onClick: (TvShowUiModel) -> Unit
 ) {
     Card(
         modifier = Modifier

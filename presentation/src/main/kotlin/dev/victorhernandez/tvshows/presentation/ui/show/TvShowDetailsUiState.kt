@@ -1,9 +1,9 @@
 package dev.victorhernandez.tvshows.presentation.ui.show
 
-import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 
 data class TvShowDetailsUiState(
-    val show: TvShowDetailUiModel? = null,
-    val shows: List<TvShowDetailUiModel> = emptyList(),
+    val show: TvShowUiModel? = null,
+    val shows: List<TvShowUiModel> = emptyList(),
     val loading: Boolean = false
 )

@@ -3,7 +3,7 @@ package dev.victorhernandez.tvshows.presentation.ui.show
 import app.cash.turbine.test
 import dev.victorhernandez.tvshows.domain.usecase.GetSimilarTvShowsUseCase
 import dev.victorhernandez.tvshows.presentation.ktx.append
-import dev.victorhernandez.tvshows.presentation.mapper.toDetailUiModel
+import dev.victorhernandez.tvshows.presentation.mapper.toUi
 import dev.victorhernandez.tvshows.presentation.utils.TvShowListItemDomainModelFactory
 import dev.victorhernandez.tvshows.presentation.utils.TvShowPageDomainModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +18,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
-import kotlin.random.Random
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
@@ -43,7 +42,7 @@ class TvShowDetailsViewModelTest {
     @Test
     fun `verify load similar tv shows happy path`() = testDispatcher.runBlockingTest {
         // given:
-        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
+        val show = TvShowListItemDomainModelFactory.createOne().toUi()
         val response = TvShowPageDomainModelFactory.createOne()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
 
@@ -58,7 +57,7 @@ class TvShowDetailsViewModelTest {
     @Test
     fun `verify load similar tv shows on error interactions`() = testDispatcher.runBlockingTest {
         // given:
-        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
+        val show = TvShowListItemDomainModelFactory.createOne().toUi()
         val error = Throwable()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
 
@@ -72,7 +71,7 @@ class TvShowDetailsViewModelTest {
 
     @Test
     fun `verify ui state content successful load`() = testDispatcher.runBlockingTest {
-        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
+        val show = TvShowListItemDomainModelFactory.createOne().toUi()
         val response = TvShowPageDomainModelFactory.createOne()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
 
@@ -96,19 +95,19 @@ class TvShowDetailsViewModelTest {
 
             awaitItem().apply {
                 assertEquals(true, loading)
-                assertEquals(listOf(show).append(response.toDetailUiModel()), shows)
+                assertEquals(listOf(show).append(response.toUi()), shows)
             }
 
             awaitItem().apply {
                 assertEquals(false, loading)
-                assertEquals(listOf(show).append(response.toDetailUiModel()), shows)
+                assertEquals(listOf(show).append(response.toUi()), shows)
             }
         }
     }
 
     @Test
     fun `verify ui state content on error load`() = testDispatcher.runBlockingTest {
-        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
+        val show = TvShowListItemDomainModelFactory.createOne().toUi()
         val error = Throwable()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
 

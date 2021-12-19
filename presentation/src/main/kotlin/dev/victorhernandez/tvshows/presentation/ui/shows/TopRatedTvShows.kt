@@ -12,8 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
-import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.theme.SpacingMedium
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.common.ListEndReachedHandler
@@ -25,31 +24,23 @@ internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvSh
 @Composable
 fun TopRatedTvShowsScreen(
     viewModel: TopRatedTvShowsViewModel = hiltViewModel(),
-    onNavigateToShowDetails: (TvShowDetailUiModel) -> Unit
+    onNavigateToShowDetails: (TvShowUiModel) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState()
     TopRatedTvShows(
         state.value.shows,
         { viewModel.loadMoreShows() }
     ) {
-        onNavigateToShowDetails.invoke(
-            TvShowDetailUiModel(
-                it.id,
-                it.name,
-                it.image,
-                it.voteAverage,
-                "Dummy overview"
-            )
-        )
+        onNavigateToShowDetails(it)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TopRatedTvShows(
-    shows: List<TvShowListItemUiModel>,
+    shows: List<TvShowUiModel>,
     onListEndReached: () -> Unit,
-    onClick: (TvShowListItemUiModel) -> Unit
+    onClick: (TvShowUiModel) -> Unit
 ) {
     val listState = rememberLazyListState()
 

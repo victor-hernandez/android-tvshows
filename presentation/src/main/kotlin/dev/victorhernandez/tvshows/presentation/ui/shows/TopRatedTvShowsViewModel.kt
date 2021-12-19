@@ -7,7 +7,7 @@ import dev.victorhernandez.tvshows.domain.usecase.GetTopRatedShowsUseCase
 import dev.victorhernandez.tvshows.presentation.flow.collect
 import dev.victorhernandez.tvshows.presentation.flow.flowStatus
 import dev.victorhernandez.tvshows.presentation.ktx.append
-import dev.victorhernandez.tvshows.presentation.mapper.toListUiModel
+import dev.victorhernandez.tvshows.presentation.mapper.toUi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -54,11 +54,11 @@ class TopRatedTvShowsViewModel @Inject constructor(
 
                         _uiState.value = _uiState.value.let { state ->
                             state.copy(
-                                shows = state.shows.append(it.toListUiModel())
+                                shows = state.shows.append(it.toUi())
                             )
                         }
                         TopRatedTvShowsUiState(
-                            shows = it.toListUiModel()
+                            shows = it.toUi()
                         )
                     },
                     onError = {

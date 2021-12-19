@@ -3,7 +3,7 @@ package dev.victorhernandez.tvshows.presentation.ui.shows
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 import org.junit.Before
@@ -20,7 +20,7 @@ class TopRatedTvShowsTest {
 
     private val shows = TvShows
 
-    private val onClick: ((TvShowListItemUiModel) -> Unit) = mock()
+    private val onClick: ((TvShowUiModel) -> Unit) = mock()
 
     private val onLoadMore: (() -> Unit) = mock()
 

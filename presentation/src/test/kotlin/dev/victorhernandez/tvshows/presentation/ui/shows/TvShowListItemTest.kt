@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.victorhernandez.tvshows.presentation.R
-import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 import dev.victorhernandez.tvshows.presentation.utils.stringResource
@@ -28,7 +28,7 @@ class TvShowListItemTest {
 
     private val show = TvShows.first()
 
-    private val onClick: ((TvShowListItemUiModel) -> Unit) = mock()
+    private val onClick: ((TvShowUiModel) -> Unit) = mock()
 
     @Before
     fun setUp() {

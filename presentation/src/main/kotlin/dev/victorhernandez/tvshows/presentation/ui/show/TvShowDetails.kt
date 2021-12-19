@@ -20,9 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
-import coil.size.OriginalSize
 import dev.victorhernandez.tvshows.presentation.R
-import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.theme.*
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 
@@ -30,7 +29,7 @@ internal const val TestTagTvShowDetailBottomSheet = "TestTagTvShowDetailBottomSh
 
 @Composable
 fun TvShowDetailsScreen(
-    show: TvShowDetailUiModel,
+    show: TvShowUiModel,
     onBackPressed: () -> Unit,
     viewModel: TvShowDetailsViewModel = hiltViewModel()
 ) {
@@ -48,7 +47,7 @@ fun TvShowDetailsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TvShowDetails(
-    show: TvShowDetailUiModel
+    show: TvShowUiModel
 ) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
@@ -112,7 +111,7 @@ fun TvShowDetails(
     ) {
         if (!show.image.isNullOrBlank()) {
             Image(
-                painter = rememberImagePainter(show.image),
+                painter = rememberImagePainter(show.imageBig),
                 contentDescription = "${show.name} poster picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()

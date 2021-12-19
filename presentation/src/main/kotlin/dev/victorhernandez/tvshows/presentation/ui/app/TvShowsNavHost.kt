@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowUiModel
 import dev.victorhernandez.tvshows.presentation.ui.show.TvShowDetailsScreen
 import dev.victorhernandez.tvshows.presentation.ui.shows.TopRatedTvShowsScreen
 
@@ -31,6 +31,7 @@ fun TvShowsNavHost(
                     "id={id}&" +
                     "name={name}&" +
                     "image={image}&" +
+                    "imageBig={imageBig}&" +
                     "voteAverage={voteAverage}&" +
                     "overview={overview}",
             arguments = listOf(
@@ -43,10 +44,11 @@ fun TvShowsNavHost(
         ) { entry ->
             TvShowDetailsScreen(
                 entry.arguments!!.let { args ->
-                    TvShowDetailUiModel(
+                    TvShowUiModel(
                         args.getInt("id"),
                         args.getString("name")!!,
                         args.getString("image"),
+                        args.getString("imageBig"),
                         args.getString("voteAverage")?.toDouble() ?: .0,
                         args.getString("overview")!!
                     )
@@ -59,13 +61,14 @@ fun TvShowsNavHost(
 
 private fun navigateToTvShowDetails(
     navController: NavHostController,
-    show: TvShowDetailUiModel
+    show: TvShowUiModel
 ) {
     navController.navigate(
         "tv_show_details?" +
                 "id=${show.id}&" +
                 "name=${show.name}&" +
                 "image=${show.image ?: ""}&" +
+                "imageBig=${show.imageBig ?: ""}&" +
                 "voteAverage=${show.voteAverage}&" +
                 "overview=${show.overview}"
     )
