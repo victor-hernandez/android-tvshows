@@ -2,7 +2,9 @@ package dev.victorhernandez.tvshows.presentation.ui.show
 
 import app.cash.turbine.test
 import dev.victorhernandez.tvshows.domain.usecase.GetSimilarTvShowsUseCase
+import dev.victorhernandez.tvshows.presentation.ktx.append
 import dev.victorhernandez.tvshows.presentation.mapper.toDetailUiModel
+import dev.victorhernandez.tvshows.presentation.utils.TvShowListItemDomainModelFactory
 import dev.victorhernandez.tvshows.presentation.utils.TvShowPageDomainModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -41,84 +43,96 @@ class TvShowDetailsViewModelTest {
     @Test
     fun `verify load similar tv shows happy path`() = testDispatcher.runBlockingTest {
         // given:
-        val showId = Random.nextInt()
+        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
         val response = TvShowPageDomainModelFactory.createOne()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
 
         // when:
-        sut.loadNextSimilarTvShows(showId)
+        sut.init(show)
 
         // then:
-        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(showId, 1))
+        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(show.id, 1))
         verifyNoMoreInteractions(getSimilarTvShowsUseCase)
     }
 
     @Test
     fun `verify load similar tv shows on error interactions`() = testDispatcher.runBlockingTest {
         // given:
-        val showId = Random.nextInt()
+        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
         val error = Throwable()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
 
         // when:
-        sut.loadNextSimilarTvShows(showId)
+        sut.init(show)
 
         // then:
-        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(showId, 1))
+        verify(getSimilarTvShowsUseCase).execute(GetSimilarTvShowsUseCase.Params(show.id, 1))
         verifyNoMoreInteractions(getSimilarTvShowsUseCase)
     }
 
     @Test
     fun `verify ui state content successful load`() = testDispatcher.runBlockingTest {
-        val showId = Random.nextInt()
+        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
         val response = TvShowPageDomainModelFactory.createOne()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { response }
+
         sut.uiState.test {
             awaitItem().apply {
                 assertEquals(false, loading)
                 assertEquals(emptyList(), shows)
             }
 
-            sut.loadNextSimilarTvShows(showId)
+            sut.init(show)
 
             awaitItem().apply {
-                assertEquals(true, loading)
-                assertEquals(emptyList(), shows)
+                assertEquals(false, loading)
+                assertEquals(listOf(show), shows)
             }
 
             awaitItem().apply {
                 assertEquals(true, loading)
-                assertEquals(response.toDetailUiModel(), shows)
+                assertEquals(listOf(show), shows)
+            }
+
+            awaitItem().apply {
+                assertEquals(true, loading)
+                assertEquals(listOf(show).append(response.toDetailUiModel()), shows)
             }
 
             awaitItem().apply {
                 assertEquals(false, loading)
-                assertEquals(response.toDetailUiModel(), shows)
+                assertEquals(listOf(show).append(response.toDetailUiModel()), shows)
             }
         }
     }
 
     @Test
     fun `verify ui state content on error load`() = testDispatcher.runBlockingTest {
-        val showId = Random.nextInt()
+        val show = TvShowListItemDomainModelFactory.createOne().toDetailUiModel()
         val error = Throwable()
         whenever(getSimilarTvShowsUseCase.execute(any())).thenAnswer { throw error }
+
         sut.uiState.test {
             awaitItem().apply {
                 assertEquals(false, loading)
                 assertEquals(emptyList(), shows)
             }
 
-            sut.loadNextSimilarTvShows(showId)
+            sut.init(show)
+
+            awaitItem().apply {
+                assertEquals(false, loading)
+                assertEquals(listOf(show), shows)
+            }
 
             awaitItem().apply {
                 assertEquals(true, loading)
-                assertEquals(emptyList(), shows)
+                assertEquals(listOf(show), shows)
             }
 
             awaitItem().apply {
                 assertEquals(false, loading)
-                assertEquals(emptyList(), shows)
+                assertEquals(listOf(show), shows)
             }
         }
     }

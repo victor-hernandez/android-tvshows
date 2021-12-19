@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
-import dev.victorhernandez.tvshows.presentation.ui.show.RelatedTvShows
+import dev.victorhernandez.tvshows.presentation.ui.show.TvShowDetailsScreen
 import dev.victorhernandez.tvshows.presentation.ui.shows.TopRatedTvShowsScreen
 
 @Composable
@@ -41,19 +41,17 @@ fun TvShowsNavHost(
                 navArgument("overview") { type = NavType.StringType }
             )
         ) { entry ->
-            RelatedTvShows(
-                listOf(
-                    entry.arguments!!.let { args ->
-                        TvShowDetailUiModel(
-                            args.getInt("id"),
-                            args.getString("name")!!,
-                            args.getString("image"),
-                            args.getString("voteAverage")?.toDouble() ?: .0,
-                            args.getString("overview")!!
+            TvShowDetailsScreen(
+                entry.arguments!!.let { args ->
+                    TvShowDetailUiModel(
+                        args.getInt("id"),
+                        args.getString("name")!!,
+                        args.getString("image"),
+                        args.getString("voteAverage")?.toDouble() ?: .0,
+                        args.getString("overview")!!
 
-                        )
-                    }
-                )
+                    )
+                }
             )
         }
     }

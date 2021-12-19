@@ -4,28 +4,28 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
-import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
+import dev.victorhernandez.tvshows.presentation.ui.common.ListEndReachedHandler
 
 internal const val TestTagRelatedTvShowsLazyRow = "TestTagRelatedTvShowsLazyRow"
 
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun RelatedTvShows(
-    shows: List<TvShowDetailUiModel>
+    shows: List<TvShowDetailUiModel>,
+    onListEndReached: () -> Unit,
 ) {
 
-    val lazyListState = rememberLazyListState()
+    val listState = rememberLazyListState()
 
     LazyRow(
-        state = lazyListState,
-        flingBehavior = rememberSnapperFlingBehavior(lazyListState),
+        state = listState,
+        flingBehavior = rememberSnapperFlingBehavior(listState),
         modifier = Modifier
             .testTag(TestTagRelatedTvShowsLazyRow)
     ) {
@@ -35,4 +35,10 @@ fun RelatedTvShows(
             }
         }
     }
+
+    ListEndReachedHandler(
+        listState = listState,
+        threshold = 1,
+        onListEndReached = onListEndReached
+    )
 }

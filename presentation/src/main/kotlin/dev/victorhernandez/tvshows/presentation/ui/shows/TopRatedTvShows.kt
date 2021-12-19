@@ -22,11 +22,33 @@ import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
 
 internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvShowsLazyVerticalGrid"
 
+@Composable
+fun TopRatedTvShowsScreen(
+    viewModel: TopRatedTvShowsViewModel = hiltViewModel(),
+    onNavigateToShowDetails: (TvShowDetailUiModel) -> Unit
+) {
+    val state = viewModel.uiState.collectAsState()
+    TopRatedTvShows(
+        state.value.shows,
+        { viewModel.loadMoreShows() }
+    ) {
+        onNavigateToShowDetails.invoke(
+            TvShowDetailUiModel(
+                it.id,
+                it.name,
+                it.image,
+                it.voteAverage,
+                "Dummy overview"
+            )
+        )
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TopRatedTvShows(
     shows: List<TvShowListItemUiModel>,
-    onLoadMoreShows: () -> Unit,
+    onListEndReached: () -> Unit,
     onClick: (TvShowListItemUiModel) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -46,30 +68,8 @@ fun TopRatedTvShows(
 
     ListEndReachedHandler(
         listState = listState,
-        onLoadMode = onLoadMoreShows
+        onListEndReached = onListEndReached
     )
-}
-
-@Composable
-fun TopRatedTvShowsScreen(
-    viewModel: TopRatedTvShowsViewModel = hiltViewModel(),
-    onNavigateToShowDetails: (TvShowDetailUiModel) -> Unit
-) {
-    val state = viewModel.uiState.collectAsState(TopRatedTvShowsUiState())
-    TopRatedTvShows(
-        state.value.shows,
-        { viewModel.loadMoreShows() }
-    ) {
-        onNavigateToShowDetails.invoke(
-            TvShowDetailUiModel(
-                it.id,
-                it.name,
-                it.image,
-                it.voteAverage,
-                "Dummy overview"
-            )
-        )
-    }
 }
 
 @ExperimentalFoundationApi
@@ -81,7 +81,7 @@ private fun TopRatedTvShowsPreview(darkTheme: Boolean) {
         ) {
             TopRatedTvShows(
                 shows = TvShows,
-                onLoadMoreShows = { }
+                onListEndReached = { }
             ) { }
         }
     }

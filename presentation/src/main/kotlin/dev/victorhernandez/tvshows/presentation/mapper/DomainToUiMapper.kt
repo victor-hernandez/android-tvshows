@@ -20,7 +20,7 @@ fun TvShowListItemDomainModel.toDetailUiModel(): TvShowDetailUiModel =
     TvShowDetailUiModel(
         id = id,
         name = name,
-        image = "https://image.tmdb.org/t/p/original/${backdropPath ?: posterPath}",
+        image = "https://image.tmdb.org/t/p/original/$posterPath",
         voteAverage = voteAverage,
         overview = overview
     )

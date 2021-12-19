@@ -2,6 +2,7 @@ package dev.victorhernandez.tvshows.presentation.ui.show
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -16,13 +18,30 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
 import dev.victorhernandez.tvshows.presentation.R
 import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
 import dev.victorhernandez.tvshows.presentation.theme.*
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 
 internal const val TestTagTvShowDetailBottomSheet = "TestTagTvShowDetailBottomSheet"
+
+@Composable
+fun TvShowDetailsScreen(
+    show: TvShowDetailUiModel,
+    viewModel: TvShowDetailsViewModel = hiltViewModel()
+) {
+
+    viewModel.init(show)
+    val state = viewModel.uiState.collectAsState()
+
+    RelatedTvShows(
+        shows = state.value.shows,
+        onListEndReached = { viewModel.loadNextSimilarTvShows() }
+    )
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -93,7 +112,8 @@ fun TvShowDetails(
             Image(
                 painter = rememberImagePainter(show.image),
                 contentDescription = "${show.name} poster picture",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

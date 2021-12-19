@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 fun ListEndReachedHandler(
     listState: LazyListState,
     threshold: Int = 2,
-    onLoadMode: () -> Unit
+    onListEndReached: () -> Unit
 ) {
 
     val shouldLoadMore = remember {
@@ -24,6 +24,6 @@ fun ListEndReachedHandler(
     LaunchedEffect(shouldLoadMore) {
         snapshotFlow { shouldLoadMore.value }
             .distinctUntilChanged()
-            .collect { onLoadMode() }
+            .collect { onListEndReached() }
     }
 }
