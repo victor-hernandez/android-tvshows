@@ -67,7 +67,7 @@ fun TopRatedTvShowsScreen(
 private fun TopRatedTvShowsPreview(darkTheme: Boolean) {
     TVShowsTheme(darkTheme) {
         Scaffold(
-            topBar = { TvShowsTopBar() }
+            topBar = { TvShowsTopBar(false) { } }
         ) {
             TopRatedTvShows(
                 shows = TvShows

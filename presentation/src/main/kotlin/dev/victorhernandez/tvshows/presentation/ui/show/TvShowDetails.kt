@@ -103,7 +103,7 @@ fun TvShowDetails(
 private fun TvShowDetailsPreview(darkTheme: Boolean) {
     TVShowsTheme(darkTheme) {
         Scaffold(
-            topBar = { TvShowsTopBar() }
+            topBar = { TvShowsTopBar(false) { } }
         ) {
             TvShowDetails(
                 show = dev.victorhernandez.tvshows.presentation.ui.example.TvShowDetails.first()

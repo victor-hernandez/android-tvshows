@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TV shows</string>
     <string name="vote_average_over_total">%1$s/10</string>
+    <string name="navigate_up_button">Navigate up button</string>
 </resources>
