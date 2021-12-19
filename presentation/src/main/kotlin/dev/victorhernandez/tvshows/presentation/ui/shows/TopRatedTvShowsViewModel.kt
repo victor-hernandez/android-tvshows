@@ -9,6 +9,7 @@ import dev.victorhernandez.tvshows.presentation.flow.flowStatus
 import dev.victorhernandez.tvshows.presentation.ktx.append
 import dev.victorhernandez.tvshows.presentation.mapper.toUi
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

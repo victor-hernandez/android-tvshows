@@ -18,6 +18,8 @@ class TopRatedTvShowsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val loading = false
+
     private val shows = TvShows
 
     private val onClick: ((TvShowUiModel) -> Unit) = mock()
@@ -29,6 +31,7 @@ class TopRatedTvShowsTest {
         composeTestRule.setContent {
             TVShowsTheme {
                 TopRatedTvShows(
+                    loading,
                     shows,
                     onLoadMore,
                     onClick
