@@ -38,6 +38,7 @@ fun TvShowsNavHost(
                 navArgument("id") { type = NavType.IntType },
                 navArgument("name") { type = NavType.StringType },
                 navArgument("image") { type = NavType.StringType },
+                navArgument("imageBig") { type = NavType.StringType },
                 navArgument("voteAverage") { type = NavType.StringType },
                 navArgument("overview") { type = NavType.StringType }
             )
@@ -70,6 +71,6 @@ private fun navigateToTvShowDetails(
                 "image=${show.image ?: ""}&" +
                 "imageBig=${show.imageBig ?: ""}&" +
                 "voteAverage=${show.voteAverage}&" +
-                "overview=${show.overview}"
+                "overview=${show.overview.let { if (it.isBlank()) " " else it }}"
     )
 }
