@@ -23,19 +23,15 @@ fun RelatedTvShows(
 
     val lazyListState = rememberLazyListState()
 
-    Scaffold(
-        topBar = { TvShowsTopBar() }
+    LazyRow(
+        state = lazyListState,
+        flingBehavior = rememberSnapperFlingBehavior(lazyListState),
+        modifier = Modifier
+            .testTag(TestTagRelatedTvShowsLazyRow)
     ) {
-        LazyRow(
-            state = lazyListState,
-            flingBehavior = rememberSnapperFlingBehavior(lazyListState),
-            modifier = Modifier
-                .testTag(TestTagRelatedTvShowsLazyRow)
-        ) {
-            items(shows) { show ->
-                Box(modifier = Modifier.fillParentMaxWidth()) {
-                    TvShowDetails(show)
-                }
+        items(shows) { show ->
+            Box(modifier = Modifier.fillParentMaxWidth()) {
+                TvShowDetails(show)
             }
         }
     }

@@ -50,6 +50,7 @@ dependencies {
     implementation libraries.androidxComposeUiPreview
     implementation libraries.androidxComposeMaterial
     implementation libraries.androidxComposeViewModel
+    implementation libraries.androidxHiltNavitionCompose
     implementation libraries.coilCompose
     debugImplementation libraries.androidxComposeUiTooling
     implementation libraries.composeLazySnapper

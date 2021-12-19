@@ -10,12 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.victorhernandez.tvshows.presentation.model.TvShowDetailUiModel
 import dev.victorhernandez.tvshows.presentation.model.TvShowListItemUiModel
 import dev.victorhernandez.tvshows.presentation.theme.SpacingMedium
 import dev.victorhernandez.tvshows.presentation.theme.TVShowsTheme
 import dev.victorhernandez.tvshows.presentation.ui.common.TvShowsTopBar
 import dev.victorhernandez.tvshows.presentation.ui.example.TvShows
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 internal const val TestTagTopRatedTvShowsLazyVerticalGrid = "TestTagTopRatedTvShowsLazyVerticalGrid"
 
@@ -25,18 +26,15 @@ fun TopRatedTvShows(
     shows: List<TvShowListItemUiModel>,
     onClick: (TvShowListItemUiModel) -> Unit
 ) {
-    Scaffold(
-        topBar = { TvShowsTopBar() }
+
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(2),
+        contentPadding = PaddingValues(SpacingMedium),
+        modifier = Modifier.testTag(TestTagTopRatedTvShowsLazyVerticalGrid)
     ) {
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            contentPadding = PaddingValues(SpacingMedium),
-            modifier = Modifier.testTag(TestTagTopRatedTvShowsLazyVerticalGrid)
-        ) {
-            items(shows) { show ->
-                key(show.id) {
-                    TvShowListItem(show, onClick)
-                }
+        items(shows) { show ->
+            key(show.id) {
+                TvShowListItem(show, onClick)
             }
         }
     }
@@ -44,22 +42,37 @@ fun TopRatedTvShows(
 
 @Composable
 fun TopRatedTvShowsScreen(
-    viewModel: TopRatedTvShowsViewModel = viewModel()
+    viewModel: TopRatedTvShowsViewModel = hiltViewModel(),
+    onNavigateToShowDetails: (TvShowDetailUiModel) -> Unit
 ) {
     val state = viewModel.uiState.collectAsState(TopRatedTvShowsUiState())
     LaunchedEffect(viewModel) {
         viewModel.loadTopRatedTvShows()
     }
-    TopRatedTvShows(state.value.shows) {}
+    TopRatedTvShows(state.value.shows) {
+        onNavigateToShowDetails.invoke(
+            TvShowDetailUiModel(
+                it.id,
+                it.name,
+                it.image,
+                it.voteAverage,
+                "Dummy overview"
+            )
+        )
+    }
 }
 
 @ExperimentalFoundationApi
 @Composable
 private fun TopRatedTvShowsPreview(darkTheme: Boolean) {
     TVShowsTheme(darkTheme) {
-        TopRatedTvShows(
-            shows = TvShows
-        ) { }
+        Scaffold(
+            topBar = { TvShowsTopBar() }
+        ) {
+            TopRatedTvShows(
+                shows = TvShows
+            ) { }
+        }
     }
 }
 
