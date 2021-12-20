@@ -1,0 +1,13 @@
+plugins {
+    id 'kotlin'
+}
+
+dependencies {
+    implementation libraries.kotlin
+    implementation libraries.jaxaxInject
+
+    testImplementation project(':test-utils')
+    testImplementation testLibraries.kotlinJunit
+    testImplementation testLibraries.kotlinxCoroutinesTest
+    testImplementation testLibraries.mockitoKotlin
+}

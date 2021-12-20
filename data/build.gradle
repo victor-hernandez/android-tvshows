@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+
+    compileSdk projectConfig.compileSdk
+
+    defaultConfig {
+        minSdk projectConfig.minSdk
+        targetSdk projectConfig.targetSdk
+        versionCode projectConfig.versionCode
+        versionName projectConfig.versionName
+
+        buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+        buildConfigField "String", "API_KEY", '"66016bf29d1572b26fa06d0389ba6224"'
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'false'
+        }
+
+        debug {
+            buildConfigField "Boolean", "LOGGING_ENABLED", 'true'
+        }
+    }
+}
+
+dependencies {
+    implementation libraries.kotlin
+    implementation project(':domain')
+
+    implementation libraries.hilt
+    kapt libraries.hiltCompiler
+
+    implementation libraries.retrofit
+    implementation libraries.okhttpLoggingInterceptor
+    implementation libraries.retrofitMoshiConverter
+    implementation libraries.moshi
+    kapt libraries.moshiCodegen
+
+    testImplementation project(':test-utils')
+    testImplementation testLibraries.kotlinJunit
+    testImplementation testLibraries.kotlinxCoroutinesTest
+    testImplementation testLibraries.mockitoKotlin
+}

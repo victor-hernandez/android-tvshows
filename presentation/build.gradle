@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+
+    compileSdk projectConfig.compileSdk
+
+    defaultConfig {
+        minSdk projectConfig.minSdk
+        targetSdk projectConfig.targetSdk
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion librariesVersions.androidxCompose
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    implementation libraries.kotlin
+    implementation libraries.kotlinxCoroutinesCore
+    implementation project(':domain')
+
+    implementation libraries.hilt
+    kapt libraries.hiltCompiler
+
+    implementation libraries.androidxComposeActivity
+    implementation libraries.androidxComposeUiPreview
+    implementation libraries.androidxComposeMaterial
+    implementation libraries.androidxComposeViewModel
+    implementation libraries.androidxHiltNavitionCompose
+    implementation libraries.coilCompose
+    debugImplementation libraries.androidxComposeUiTooling
+    implementation libraries.composeLazySnapper
+
+    testImplementation project(':test-utils')
+    testImplementation testLibraries.kotlinJunit
+    testImplementation testLibraries.kotlinxCoroutinesTest
+    testImplementation testLibraries.mockitoKotlin
+    testImplementation testLibraries.turbine
+    testImplementation testLibraries.mockitoKotlin
+    testImplementation testLibraries.androidxComposeJunit4
+    debugImplementation testLibraries.androidxComposeTestManifest
+    testImplementation testLibraries.robolectric
+}
